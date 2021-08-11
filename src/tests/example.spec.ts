@@ -1,37 +1,12 @@
+import { textSpanContainsTextSpan } from "typescript";
 import { Game } from "../app/Game";
 import { Moves } from "../app/Moves";
 import { Results } from "../app/Results";
 
 describe('Game', () => {
     describe('Play',()=>{
-        it('Given PlayerMove paper and OpponentMove rock should return player wins', () => {
-            //Arrange
-            let sut = new Game();
-            const playerMove = Moves.Paper;
-            const opponent = Moves.Rock;
-            //Act
-            let actual = sut.Play(playerMove, opponent);
-            //Assert
-            let expected = Results.PlayerWins;
-            expect(actual).toBe(expected);
-        })
-        
-        it('Given PlayerMove paper and OpponentMove Scissors should return player loses', () => {
-            //Arrange
-            let sut = new Game();
-            const playerMove = Moves.Paper;
-            const opponent = Moves.Scissors;
-            //Act
-            let actual = sut.Play(playerMove, opponent);
-            //Assert
-            let expected = Results.PlayerLoses;
-            expect(actual).toBe(expected);
-        })
-        
-        let moves: Moves[] = [ Moves.Paper, Moves.Rock, Moves.Scissors ];
-
-        moves.forEach(move => {
-            it(`Given both players choose ${move} should tie`, () => {
+        [ Moves.Paper, Moves.Rock, Moves.Scissors ].forEach(move => {
+            it(`Same moves tie`, () => {
                 //Arrange
                 let sut = new Game();
                 //Act
@@ -41,42 +16,51 @@ describe('Game', () => {
                 expect(actual).toBe(expected);
             })
         });
-
-        it('Given PlayerMove paper and OpponentMove paper should return tie', () => {
-            //Arrange
-            let sut = new Game();
-            const playerMove = Moves.Paper;
-            const opponent = Moves.Paper;
-            //Act
-            let actual = sut.Play(playerMove, opponent);
-            //Assert
-            let expected = Results.Tie;
-            expect(actual).toBe(expected);
-        })
-
-        it('Given PlayerMove rock and OpponentMove rock should return tie', () => {
-            //Arrange
-            let sut = new Game();
-            const playerMove = Moves.Rock;
-            const opponent = Moves.Rock;
-            //Act
-            let actual = sut.Play(playerMove, opponent);
-            //Assert
-            let expected = Results.Tie;
-            expect(actual).toBe(expected);
-        })
         
-        it('Given PlayerMove scissors and OpponentMove scissors should return tie', () => {
-            //Arrange
-            let sut = new Game();
-            const playerMove = Moves.Scissors;
-            const opponent = Moves.Scissors;
-            //Act
-            let actual = sut.Play(playerMove, opponent);
-            //Assert
-            let expected = Results.Tie;
-            expect(actual).toBe(expected);
-        })
+        [   
+            {Player:Moves.Paper, Opponent: Moves.Rock, Result: Results.PlayerWins}, 
+            {Player:Moves.Rock, Opponent: Moves.Paper, Result: Results.PlayerLoses } 
+        ].forEach(testCase => {
+            it(`Paper beats Rock`, () => {
+                //Arrange
+                let sut = new Game();
+                //Act
+                let actual = sut.Play(testCase.Player, testCase.Opponent);
+                //Assert
+                let expected = testCase.Result;
+                expect(actual).toBe(expected);
+            })
+        });
+        
+        [   
+            {Player:Moves.Rock, Opponent: Moves.Scissors, Result: Results.PlayerWins}, 
+            {Player:Moves.Scissors, Opponent: Moves.Rock, Result: Results.PlayerLoses } 
+        ].forEach(testCase => {
+            it(`Rock Beats Scissors`, () => {
+                //Arrange
+                let sut = new Game();
+                //Act
+                let actual = sut.Play(testCase.Player, testCase.Opponent);
+                //Assert
+                let expected = testCase.Result;
+                expect(actual).toBe(expected);
+            })
+        });
+        
+        [   
+            {Player:Moves.Scissors, Opponent: Moves.Paper, Result: Results.PlayerWins}, 
+            {Player:Moves.Paper, Opponent: Moves.Scissors, Result: Results.PlayerLoses } 
+        ].forEach(testCase => {
+            it(`Scissors Beats Paper`, () => {
+                //Arrange
+                let sut = new Game();
+                //Act
+                let actual = sut.Play(testCase.Player, testCase.Opponent);
+                //Assert
+                let expected = testCase.Result;
+                expect(actual).toBe(expected);
+            })
+        });
     })
   
 })
