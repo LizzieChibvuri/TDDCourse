@@ -2,5 +2,6 @@
 export enum Moves {
     Paper = "Paper",
     Scissors = "Scissors",
-    Rock = "Rock"
+    Rock = "Rock",
+    Spock="Spock"
 }

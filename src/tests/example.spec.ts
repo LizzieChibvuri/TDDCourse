@@ -5,7 +5,7 @@ import { Results } from "../app/Results";
 
 describe('Game', () => {
     describe('Play',()=>{
-        [ Moves.Paper, Moves.Rock, Moves.Scissors ].forEach(move => {
+        [ Moves.Paper, Moves.Rock, Moves.Scissors ,Moves.Spock].forEach(move => {
             it(`Same moves tie`, () => {
                 //Arrange
                 let sut = new Game();
@@ -52,6 +52,36 @@ describe('Game', () => {
             {Player:Moves.Paper, Opponent: Moves.Scissors, Result: Results.PlayerLoses } 
         ].forEach(testCase => {
             it(`Scissors Beats Paper`, () => {
+                //Arrange
+                let sut = new Game();
+                //Act
+                let actual = sut.Play(testCase.Player, testCase.Opponent);
+                //Assert
+                let expected = testCase.Result;
+                expect(actual).toBe(expected);
+            })
+        });
+
+        [   
+            {Player:Moves.Spock, Opponent: Moves.Scissors, Result: Results.PlayerWins}, 
+            {Player:Moves.Scissors, Opponent: Moves.Spock, Result: Results.PlayerLoses } 
+        ].forEach(testCase => {
+            it(`Spock Beats Scissors`, () => {
+                //Arrange
+                let sut = new Game();
+                //Act
+                let actual = sut.Play(testCase.Player, testCase.Opponent);
+                //Assert
+                let expected = testCase.Result;
+                expect(actual).toBe(expected);
+            })
+        });
+
+        [   
+            {Player:Moves.Paper, Opponent: Moves.Spock, Result: Results.PlayerWins}, 
+            {Player:Moves.Spock, Opponent: Moves.Paper, Result: Results.PlayerLoses } 
+        ].forEach(testCase => {
+            it(`Paper Beats Spock`, () => {
                 //Arrange
                 let sut = new Game();
                 //Act

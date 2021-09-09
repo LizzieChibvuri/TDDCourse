@@ -13,8 +13,14 @@ export class Game {
             [Moves.Scissors+Moves.Scissors,Results.Tie],
             [Moves.Rock+Moves.Rock,Results.Tie],
             [Moves.Paper+Moves.Paper,Results.Tie],
+            [Moves.Spock+Moves.Spock,Results.Tie],
+            [Moves.Spock+Moves.Scissors,Results.PlayerWins],
+            [Moves.Scissors+Moves.Spock,Results.PlayerLoses],
+            [Moves.Paper+Moves.Spock,Results.PlayerWins],
+            [Moves.Spock+Moves.Paper,Results.PlayerLoses],
         ])
-        return dictionary.get(playerMove+opponentMove);
+
+        return dictionary.get(playerMove+opponentMove) || Results.PlayerWins;
     }
 
 }
